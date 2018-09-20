@@ -4,7 +4,7 @@ Simple groovy program which demonstrates a possible bug with groovy Sql.
 
 ## Details
 
-Calling `sql.rows(string)` works while calling `sql.rows(gstring)` fails silently.
+Calling `sql.rows(string)` works while calling `sql.rows(gstring)` returns an empty result set.
 This indicates a possible bug in the protected method `groovy.sql.Sql.asSql()`.
 
 The behavior is the same under groovy version 2.4.15, 2.5.2, 2.6.0-alpha-4, and 3.0.0-alpha-3

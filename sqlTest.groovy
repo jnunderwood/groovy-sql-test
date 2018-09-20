@@ -3,9 +3,10 @@
  *
  * Demonstrates a bug with 'groovy.sql.Sql', possibly in the protected method 'asSql()'.
  *
- * Calling 'sql.rows(string)' works. Calling 'sql.rows(gstring)' fails silently. It behaves
- * the same in groovy versions 2.4.15, 2.5.2, 2.6.0-alpha-4, and 3.0.0-alpha-3, all running
- * under OpenJDK Java 8.0.181-zulu. Run this program by simply calling 'groovy sqlTest.groovy'.
+ * Calling 'sql.rows(string)' works. Calling 'sql.rows(gstring)' returns an empty result set.
+ * It behaves the same in groovy versions 2.4.15, 2.5.2, 2.6.0-alpha-4, and 3.0.0-alpha-3, all
+ * running under OpenJDK Java 8.0.181-zulu. Run this program by simply calling
+ * 'groovy sqlTest.groovy'.
  */
 
 @GrabConfig(systemClassLoader=true)
@@ -39,17 +40,6 @@ for (map in data) {
 // define ids to lookup
 def ids = "'1', '2'"
 
-// lookup some data using a GString statement
-def gStringSelect = """
-    SELECT id, name
-      FROM employee
-     WHERE id IN ($ids)
-"""
-def rows = sql.rows(gStringSelect)
-println ""
-println "sql.rows(" + gStringSelect.class + ") returned $rows.size rows; expected $data.size rows"
-println ""
-
 // look up some data using a String statement
 String stringSelect = """
     SELECT id, name
@@ -59,6 +49,17 @@ String stringSelect = """
 rows = sql.rows(stringSelect)
 println ""
 println "sql.rows(" + stringSelect.class + ") returned $rows.size rows; expected $data.size rows"
+println ""
+
+// lookup some data using a GString statement
+def gStringSelect = """
+    SELECT id, name
+      FROM employee
+     WHERE id IN ($ids)
+"""
+def rows = sql.rows(gStringSelect)
+println ""
+println "sql.rows(" + gStringSelect.class + ") returned $rows.size rows; expected $data.size rows"
 println ""
 
 // clean up
