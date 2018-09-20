@@ -47,6 +47,7 @@ String stringSelect = """
      WHERE id IN ($ids)
 """
 rows = sql.rows(stringSelect)
+
 println ""
 println "sql.rows(" + stringSelect.class + ") returned $rows.size rows; expected $data.size rows"
 println ""
@@ -58,6 +59,7 @@ def gStringSelect = """
      WHERE id IN ($ids)
 """
 def rows = sql.rows(gStringSelect)
+
 println ""
 println "sql.rows(" + gStringSelect.class + ") returned $rows.size rows; expected $data.size rows"
 println ""
